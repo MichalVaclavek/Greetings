@@ -1,7 +1,13 @@
-## Greetings
+## Greetings service
 
 This is Greetings REST service application - service that provides appropriate greeting upon API request according preferred language
 and depending requested time of the day.
+REST API examples:<br>
+	<ul>
+	http://localhost:8080/api/greeting/timesensitive?usersTime=17:10&lang=en-US<br>
+	http://localhost:8080/api/greeting/timesensitive?usersTime=05:01&lang=es<br>
+	http://localhost:8080/api/greeting/timeinsensitive?lang=cs_CS
+	</ul>
 
 ## Getting Started
 
@@ -19,7 +25,7 @@ Java 11 installed, Maven, JUnit5
 1] Cloning project from GitHub to your local Git repository:
 
 Open Git Repositories View. Window -> Show View -> Other -> Git -> Git Repositories
-In that new View click on "Clone a Git repository", fill in URI: https://github.com/MichalVaclavek/Greetings and click "Next". If not selected, select "master" branch, and click "Next". Select directory where the local repository will be located/cloned to, click "Finish". 
+In that new View click on "Clone a Git repository", fill in URI: https://github.com/MichalVaclavek/Greetings.git and click "Next". If not selected, select "master" branch, and click "Next". Select directory where the local repository will be located/cloned to, click "Finish". 
 
 2] Importing project from local Git repository to Eclipse:
 Go to File -> Import -> Maven -> Existing Maven Project -> Next, select Directory, where you have cloned the project (step 1). Click "Finish" and your project is imported into Eclipse and ready to run.
@@ -27,7 +33,7 @@ Go to File -> Import -> Maven -> Existing Maven Project -> Next, select Director
 
 ## Running the tests
 
-Standard right click on the /src/test/java directory of the project in your Eclipse Project explorer and select Run jUnit test.
+Standard right click on the /src/test/java directory of the project in your Eclipse Project explorer and select Run JUnit test.
 or 'mvn test' in the project's directory.
 
 ## Deployment
