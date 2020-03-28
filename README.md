@@ -30,7 +30,7 @@ Every mode has its own API call structure
 
   `lang=[string]`  (example values: lang=cs-CS lang=en-GB or lang=es)
   <br>
-  `usersTime=[string]`  (example value: usersTime=15:01) - for **time sensitive** mode only
+  `usersTime=[string]`  (example value: usersTime=05:01)
 
 * **Data Params**
 
@@ -63,6 +63,7 @@ Every mode has its own API call structure
 	<li>**Time sensitive** (for ''en-US' language): `http://localhost:8080/api/greeting/timesensitive?usersTime=17:10&lang=en-US`</li>
 	<li>**Time sensitive** (for 'es' language): `http://localhost:8080/api/greeting/timesensitive?usersTime=05:01&lang=es`</li>
 	<li>**Time insensitive** (for 'cs\_CS' language): `http://localhost:8080/api/greeting/timeinsensitive?lang=cs_CS`</li>
+	<li>**Time insensitive** (for 'cs\_CS' language): `http://localhost:8080/api/greeting/timeinsensitive?usersTime=15:15?lang=cs_CS`</li>
 	</ul>
 	
 
