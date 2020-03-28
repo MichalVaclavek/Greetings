@@ -44,16 +44,16 @@ Every mode has its own API call structure
 
 * **Error Response:**<br /><br />
  *Code:*  404 NOT FOUND <br />
- *Content:* `{ 	status: "NOT_FOUND",<br />
-    			timestamp: "28-03-2020 08:31:50",<br />
-    			message: "Language 'aa' not supported.",<br />
+ *Content:* `{ 	status: "NOT_FOUND",
+    			timestamp: "28-03-2020 08:31:50",
+    			message: "Language 'aa' not supported.",
     			debugMessage: "" }`
 	
   OR<br /><br />
  *Code:*  400 BAD REQUEST <br />
- *Content:* `{ 	status: "BAD_REQUEST",<br />
-    			timestamp: "28-03-2020 08:33:23",<br />
-    			message: "Invalid value '' or missing parameter 'lang'.",<br />
+ *Content:* `{ 	status: "BAD_REQUEST",
+    			timestamp: "28-03-2020 08:33:23",
+    			message: "Invalid value '' or missing parameter 'lang'.",
     			debugMessage: "" }`
 
 
