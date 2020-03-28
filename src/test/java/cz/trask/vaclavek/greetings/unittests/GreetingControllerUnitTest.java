@@ -49,11 +49,14 @@ public class GreetingControllerUnitTest
     GreetingsController greetingsController;
     
     
-    
+    /**
+     * Tests if the correct greeting text is returned according given user's time, language code and {@code locale} 
+     * by {@link GreetingsController#getGreetingTimeSensitive(String, String, locale)} method
+     */
     @Test
     public void givenLocale_and_usersTime_whenTimeSensitive_thenCorrectGreetingShouldReturn() throws Exception {
         
-        // czech, CS, user's time 05:01, evening greeting expected
+        // czech, CS, user's time 05:01, Morning greeting expected
         Locale locale = new Locale("cs", "CS");
         
         String greetingExpected = messages.getMessage(GreetingsServiceImpl.GREETING_MORNING_KEY, null, locale);
@@ -66,7 +69,7 @@ public class GreetingControllerUnitTest
         assertThat(responseEntity.getStatusCodeValue()).isEqualTo(200);
         assertThat(responseEntity.getBody().toString()).isEqualTo(greetingExpected);
         
-        // english, GB, user's time 18:01, evening greeting expected
+        // english, GB, user's time 18:01, Evening greeting expected
         locale = new Locale("en", "GB");
         
         greetingExpected = messages.getMessage(GreetingsServiceImpl.GREETING_EVENING_KEY, null, locale);
@@ -77,12 +80,28 @@ public class GreetingControllerUnitTest
         
         assertThat(responseEntity.getStatusCodeValue()).isEqualTo(200);
         assertThat(responseEntity.getBody().toString()).isEqualTo(greetingExpected);
+        
+        // spanish, ES, user's time 05:01, but the Morning greeting is not available, General greeting expected
+        locale = new Locale("es", "ES");
+        
+        greetingExpected = messages.getMessage(GreetingsServiceImpl.GREETING_GENERAL_TIMEINSENSITIVE_KEY, null, locale);
+        when(timePeriodService.getTimePeriod(Mockito.contains("05:01"))).thenReturn(TimePeriod.GENERAL_PURPOSE);
+        when(greetingsService.getTimeSensitiveGreeting(Mockito.eq(TimePeriod.GENERAL_PURPOSE), Mockito.eq(locale))).thenReturn(greetingExpected);
+        
+        responseEntity = greetingsController.getGreetingTimeSensitive("05:01", "es", locale);
+        
+        assertThat(responseEntity.getStatusCodeValue()).isEqualTo(200);
+        assertThat(responseEntity.getBody().toString()).isEqualTo(greetingExpected);
     }
     
+    /**
+     * Tests if the correct greeting text is returned according given language code and {@code locale} 
+     * by {@link GreetingsController#getGreetingTimeInsensitive(String, locale)} method
+     */
     @Test
     public void givenLocale_and_usersTime_whenTimeInSensitive_thenCorrectGreetingShouldReturn() throws Exception {
         
-        // spanish, ES, general time insensitive greeting expected
+        // spanish, ES, General time insensitive greeting expected
         Locale locale = new Locale("es", "ES");
         
         String greetingExpected = messages.getMessage(GreetingsServiceImpl.GREETING_GENERAL_TIMEINSENSITIVE_KEY, null, locale);
@@ -93,7 +112,7 @@ public class GreetingControllerUnitTest
         assertThat(responseEntity.getStatusCodeValue()).isEqualTo(200);
         assertThat(responseEntity.getBody().toString()).isEqualTo(greetingExpected);
         
-        // english, US, general time insensitive greeting expected
+        // english, US, General time insensitive greeting expected
         locale = new Locale("en", "US");
         
         greetingExpected = messages.getMessage(GreetingsServiceImpl.GREETING_GENERAL_TIMEINSENSITIVE_KEY, null, locale);

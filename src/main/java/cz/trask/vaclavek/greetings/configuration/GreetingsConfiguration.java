@@ -15,26 +15,25 @@ import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 /**
  * Basic Spring {@code WebMvcConfigurer} configuration implementation of the application.
  * <p>
- * It configures especcialy default locale {@coe new Locale("xx", "XX")}<br>
- * to detect if the lang parameter from REST request is included. If it is not, then the default<br>
+ * It configures especialy default locale {@code new Locale("xx", "XX")} to detect,
+ * if the {@code 'lang'} parameter from REST request is included. If it is not, then the default
  * locale is created by Spring.
  * <p>
- * It also defines {@code lang} parameter name as the parameter name to resolve locale,<br>
- * when serving REST requests.
+ * It also defines "{@code lang}" string as the parameter name to resolve locale, when serving REST requests.
  * <p>
- * Also defines {@code MessageSource} i.e. properties files for every allowed locale (i.e. language_country combination),<br>
+ * Also defines {@code MessageSource} i.e. properties files for every allowed locale (i.e. language_country combination),
  * which stores the greetings for the respective locale.<br>
- * The properties Files are stored in the /src/main/resources directory of the application and it's name compose like:<br>
- * 'messages_language_COUNTRY.properties'<br>, where lang is the language abbrevation and COUNTRY is the country abbrevation,<br>
- * for 'example messages_en_GB.properties'
+ * The properties Files are stored in the {@code /src/main/resources} directory of the application and their name compose
+ * like: {@code 'messages_lang_COUNTRY.properties'}, where {@code lang} is the language abbrevation and {@code COUNTRY} is
+ * the country abbrevation, for example {@code 'messages_en_GB.properties'}.
  * <p>
- * The service expects the api REST calls including lang parameter, which can consists of both language and COUNTRY abbrevations,<br>
- * connected by '-' or '_' caracters (for example 'en-US' or 'cs_CS'), but it can contain only language abbrevation.<br>
- * So, if the greetings for specific new language and COUNTRY should be introduced, then corresponding properties file<br>
+ * The Service expects the api REST calls including lang parameter, which can consists of both language and COUNTRY abbrevations,
+ * connected by '-' or '_' characters (for example 'en-US' or 'cs_CS'), but it can contain only language abbrevation, too.
+ * So, if the greetings for specific new language and COUNTRY should be introduced, then corresponding properties file
  * has to be created and filled by desired greetings.<br>
- * If it is expected, that the lang parameter of the api request can contain only language abbrevation (for example lang=es),<br>
- * then corresponding properties file has to be created in form 'messages_language.properties' ,<br>
- * for 'example messages_es.properties'<br>
+ * If it is expected, that the lang parameter of the API request can contain only language abbrevation (for example lang=es),
+ * then corresponding properties file has to be created in form {@code 'messages_language.properties'}, for example
+ * {@code 'messages_es.properties'}.
  * 
  * @author Michal Vaclavek
  *

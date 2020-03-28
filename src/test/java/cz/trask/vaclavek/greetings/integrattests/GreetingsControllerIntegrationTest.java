@@ -137,7 +137,7 @@ public class GreetingsControllerIntegrationTest
         country = "CS";
         usersTime = "23:23"; 
          
-        givenLang_and_usersTime_whenTimeSensitive_thenCorrectGreetingIsReturned(lang, country, usersTime, GreetingsServiceImpl.GREETING_GENERAL_KEY);
+        givenLang_and_usersTime_whenTimeSensitive_thenCorrectGreetingIsReturned(lang, country, usersTime, GreetingsServiceImpl.GREETING_GENERAL_TIMEINSENSITIVE_KEY);
          
         // Test config. n. 4
         // 'es' language and 12:01 user's time - expects correct Afternoon greeting in spanish
@@ -147,14 +147,14 @@ public class GreetingsControllerIntegrationTest
          
         givenLang_and_usersTime_whenTimeSensitive_thenCorrectGreetingIsReturned(lang, country, usersTime, GreetingsServiceImpl.GREETING_AFTERNOON_KEY);
         
-        // Test config. n. 4
-        // 'es' language and 18:00 user's time - expects correct Evenning greeting in spanish
+        // Test config. n. 5
+        // 'es-ES' language-COUNTRY and 18:00 user's time - expects correct Evenning greeting in spanish
         lang = "es";
-        country = "";
+        country = "ES";
         usersTime = "18:00"; 
         
         givenLang_and_usersTime_whenTimeSensitive_thenCorrectGreetingIsReturned(lang, country, usersTime, GreetingsServiceImpl.GREETING_EVENING_KEY);
-    }
+     }
     
     /**
      * Helper method to gather repeated code of different test configurations, when time sensitive operation is requested.<br>

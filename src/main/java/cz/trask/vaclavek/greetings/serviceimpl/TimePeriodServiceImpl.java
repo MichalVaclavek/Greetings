@@ -18,7 +18,7 @@ import cz.trask.vaclavek.greetings.service.TimePeriodService;
  * These constant values are then used to evaluate the {@code TimePeriod}<br>
  * of the 'usersTime' inserted as input parameter to {@link #getTimePeriod(String)}<br>
  * method.<br>
- * TODO Would be better to define such values in a configuration file.
+ * TODO Would be better to define such constant values in a configuration file.
  * 
  * @author Michal Vaclavek
  *
@@ -34,16 +34,16 @@ public class TimePeriodServiceImpl implements TimePeriodService
      * i.e. defines respective {@link TimePeriod} value.<br>
      */
     // MORNING
-    private final String mornigTimeFrom = "05:00";
-    private final String mornigTimeTo = "11:59";
+    private static final String MORNING_TIME_FROM = "05:00";
+    private static final String MORNING_TIME_TO = "11:59";
     
     // AFTERNOON
-    private final String afternoonTimeFrom = "12:00";
-    private final String afternoonTimeTo = "16:59";
+    private static final String AFTERNOON_TIME_FROM = "12:00";
+    private static final String AFTERNOON_TIME_TO = "16:59";
     
     // EVENING
-    private final String eveningTimeFrom = "17:00";
-    private final String eveningTimeTo = "21:59";
+    private static final String EVENING_TIME_FROM = "17:00";
+    private static final String EVENING_TIME_TO = "21:59";
     
     private DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
     
@@ -53,13 +53,13 @@ public class TimePeriodServiceImpl implements TimePeriodService
     @Override
     public TimePeriod getTimePeriod(String usersTime) {
         
-        if (isInTimeInterval(usersTime, mornigTimeFrom, mornigTimeTo)) {
+        if (isInTimeInterval(usersTime, MORNING_TIME_FROM, MORNING_TIME_TO)) {
             return TimePeriod.MORNING;
         }
-        if (isInTimeInterval(usersTime, afternoonTimeFrom, afternoonTimeTo)) {
+        if (isInTimeInterval(usersTime, AFTERNOON_TIME_FROM, AFTERNOON_TIME_TO)) {
             return TimePeriod.AFTERNOON;
         }
-        if (isInTimeInterval(usersTime, eveningTimeFrom, eveningTimeTo)) {
+        if (isInTimeInterval(usersTime, EVENING_TIME_FROM, EVENING_TIME_TO)) {
             return TimePeriod.EVENING;
         }
             

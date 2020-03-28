@@ -29,7 +29,7 @@ public class ApiError
     private LocalDateTime timestamp;
     
     private String message;
-    private String debugMessage;
+    private String debugMessage="";
 
     private ApiError() {
         timestamp = LocalDateTime.now();

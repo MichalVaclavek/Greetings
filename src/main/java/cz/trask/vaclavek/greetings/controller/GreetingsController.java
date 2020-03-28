@@ -17,23 +17,25 @@ import cz.trask.vaclavek.greetings.service.TimePeriodService;
 
 /**
  * 
- * Main REST controller to serve REST api calls.
+ * Main REST controller to serve REST API calls.
  * <p>
- * It introduces two main api call paths for different modes of operation:
+ * It introduces two main API call paths for different modes of operation:
  * <ul>
- *  <li>1) For Time sensitive operation: /api/greeting/timesensitive</li>
+ *   <li>1) For Time sensitive operation: /api/greeting/timesensitive</li>
  *  and
- *  <li>2) for Time insensitive operation: /api/greeting/timeinsensitive</li>
+ *   <li>2) for Time insensitive operation: /api/greeting/timeinsensitive</li>
  * </ul>
  * 
- * Examples of correct REST API calls served by this controller:<br>
- * 
- * 1) http://localhost:8080/api/greeting/timesensitive?usersTime=17:10&lang=en-US<br>
- * 2) http://localhost:8080/api/greeting/timeinsensitive?lang=cs_CS<br>
+ * Examples of correct REST API calls served by this controller:
+ * <p>
+ * <ul>
+ *   <li>1) http://localhost:8080/api/greeting/timesensitive?usersTime=17:10&lang=en-US</li>
+ *   <li>2) http://localhost:8080/api/greeting/timeinsensitive?lang=cs_CS</li>
+ * </ul>
  * 
  * Requires two main services {@link GreetingsService} and {@link TimePeriodService}<br>
- * instancies to work properly
- * 
+ * instancies to work properly.
+ * <p>
  * @author Michal Vaclavek
  *
  */
@@ -68,8 +70,8 @@ public class GreetingsController
     
     /**
      * Returns greeting text as {@code ResponseEntity<String>} according input parameters<br>
-     * 'usersTime' and 'lang' for 'time sensitive' operation mode.
-     * 
+     * {@code usersTime} and {@code lang} for 'time sensitive' operation mode.
+     * <p>
      * Examples of valid http request:<br>
      *  http://localhost:8080/api/greeting/timesensitive?usersTime=17:10&lang=en-US<br>
      *  http://localhost:8080/api/greeting/timesensitive?usersTime=05:01&lang=es<br>
@@ -106,9 +108,9 @@ public class GreetingsController
     }
     
     /**
-     * Returns greeting text as {@code ResponseEntity<String>} according input parameters<br>
-     * 'lang' for 'time insensitive' operation mode.
-     * 
+     * Returns greeting text as {@code ResponseEntity<String>} according input parameter<br>
+     * {@code lang} for 'time insensitive' operation mode.
+     * <p>
      * Example of valid http request: http://localhost:8080/api/greeting/timeinsensitive?lang=cs_CS
      * 
      * @param lang - language-country or language only abbrevation for which the greeting is requested.

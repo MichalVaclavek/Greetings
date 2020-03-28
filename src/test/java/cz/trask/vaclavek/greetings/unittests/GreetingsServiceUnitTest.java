@@ -12,7 +12,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.MessageSource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import cz.trask.vaclavek.greetings.errors.InvalidParameterException;
 import cz.trask.vaclavek.greetings.errors.LanguageNotSupportedException;
+import cz.trask.vaclavek.greetings.service.GreetingsService;
+import cz.trask.vaclavek.greetings.service.TimePeriodService;
 import cz.trask.vaclavek.greetings.service.TimePeriodService.TimePeriod;
 import cz.trask.vaclavek.greetings.serviceimpl.GreetingsServiceImpl;
 
@@ -27,7 +30,7 @@ import cz.trask.vaclavek.greetings.serviceimpl.GreetingsServiceImpl;
 public class GreetingsServiceUnitTest
 {
     @Autowired
-    private GreetingsServiceImpl greetingsService;
+    private GreetingsService greetingsService;
     
     /**
      * Source of the greeting texts expected during testing.
@@ -35,7 +38,10 @@ public class GreetingsServiceUnitTest
     @Autowired
     private MessageSource messages;
     
-    
+    /**
+     * Tests if the correct greeting text is returned according given {@code locale} and {@link TimePeriod}
+     * by {@link GreetingsService#getTimeSensitiveGreeting(TimePeriod, Locale)} method
+     */
     @Test
     public void givenLocale_and_timePeriod_whenTimeSensitive_thenCorrectGreetingShouldReturn() {
         
@@ -56,6 +62,10 @@ public class GreetingsServiceUnitTest
         assertThat(greetingsService.getTimeSensitiveGreeting(TimePeriod.GENERAL_PURPOSE, locale)).isEqualTo(greetingExpected);
      }
     
+    /**
+     * Tests if the correct greeting text is returned according given {@code locale}
+     * by {@link GreetingsService#getTimeInsensitiveGreeting(Locale)} method
+     */
     @Test
     public void givenLocale_whenTimeInSensitive_thenCorrectGreetingShouldReturn() {
         
@@ -76,6 +86,10 @@ public class GreetingsServiceUnitTest
         assertThat(greetingsService.getTimeInsensitiveGreeting(locale)).isEqualTo(greetingExpected);
     }
     
+    /**
+     * Tests if the {@link LanguageNotSupportedException} is trown, when wrong input {@code locale} is inserted into
+     * {@link GreetingsService#getTimeSensitiveGreeting(TimePeriod, Locale)} method
+     */
     @Test
     public void whenInValidLocale_and_timeSensitiveRequest_thenLanguageNotSupportedExceptionShouldBeThrown() {
         
@@ -83,8 +97,12 @@ public class GreetingsServiceUnitTest
         
         assertThatThrownBy(() -> {greetingsService.getTimeSensitiveGreeting(TimePeriod.EVENING, notSupportedLocale);}).as("LanguageNotSupportedException not thrown.")
                                  .isInstanceOf(LanguageNotSupportedException.class);
-     }
+    }
     
+    /**
+     * Tests if the {@link LanguageNotSupportedException} is trown, when wrong input {@code locale} is inserted into
+     * {@link GreetingsService#getTimeInsensitiveGreeting(Locale)} method
+     */
     @Test
     public void whenInValidLocale_and_timeInSensitiveRequest_thenLanguageNotSupportedExceptionShouldBeThrown() {
         

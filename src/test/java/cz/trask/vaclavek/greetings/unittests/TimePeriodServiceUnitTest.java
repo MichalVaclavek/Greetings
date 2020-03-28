@@ -1,11 +1,5 @@
 package cz.trask.vaclavek.greetings.unittests;
 
-/**
- * Unit tests of the {@link TimePeriodService}
- * 
- * @author Michal Vaclavek
- *
- */
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -19,6 +13,12 @@ import cz.trask.vaclavek.greetings.errors.InvalidParameterException;
 import cz.trask.vaclavek.greetings.service.TimePeriodService;
 import cz.trask.vaclavek.greetings.service.TimePeriodService.TimePeriod;
 
+/**
+ * Unit tests of the {@link TimePeriodService}
+ * 
+ * @author Michal Vaclavek
+ *
+ */
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
 public class TimePeriodServiceUnitTest
@@ -27,6 +27,9 @@ public class TimePeriodServiceUnitTest
     @Autowired
     TimePeriodService timePeriodService;
     
+    /**
+     * Tests if the expected {@link TimePeriod} is returned according given 'time' string
+     */
     @Test
     public void whenValidTime_thenCorrectTimePeriodShouldReturn() {
         
@@ -44,6 +47,10 @@ public class TimePeriodServiceUnitTest
       
      }
     
+    /**
+     * Tests if the {@link InvalidParameterException} is trown, when wrong input time is inserted into
+     * {@link TimePeriodService#getTimePeriod(String)}
+     */
     @Test
     public void whenInvalidTime_thenInvalidParameterExcpetion() {
         
