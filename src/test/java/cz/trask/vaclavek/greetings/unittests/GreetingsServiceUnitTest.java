@@ -58,7 +58,7 @@ public class GreetingsServiceUnitTest
         assertThat(greetingsService.getTimeSensitiveGreeting(TimePeriod.EVENING, locale)).isEqualTo(greetingExpected);
         
         locale = new Locale("es", "ES");
-        greetingExpected = messages.getMessage(GreetingsServiceImpl.GREETING_GENERAL_KEY, null, locale);
+        greetingExpected = messages.getMessage(GreetingsServiceImpl.GREETING_GENERAL_TIMESENSITIVE_KEY, null, locale);
         assertThat(greetingsService.getTimeSensitiveGreeting(TimePeriod.GENERAL_PURPOSE, locale)).isEqualTo(greetingExpected);
      }
     

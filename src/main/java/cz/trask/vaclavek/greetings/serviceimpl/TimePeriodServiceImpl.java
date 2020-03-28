@@ -27,7 +27,7 @@ import cz.trask.vaclavek.greetings.service.TimePeriodService;
 public class TimePeriodServiceImpl implements TimePeriodService
 {
 
-    private static final Logger log = LoggerFactory.getLogger(TimePeriodServiceImpl.class);
+    private static final Logger Log = LoggerFactory.getLogger(TimePeriodServiceImpl.class);
     
     /**
      * Time string constants defining start and end of the respective day period<br>
@@ -45,7 +45,10 @@ public class TimePeriodServiceImpl implements TimePeriodService
     private static final String EVENING_TIME_FROM = "17:00";
     private static final String EVENING_TIME_TO = "21:59";
     
-    private DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+    /**
+     * Formatter of the usersTime - from String to LocalTime
+     */
+    private static DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
     
     /**
      * {@inheritDoc}
@@ -84,7 +87,7 @@ public class TimePeriodServiceImpl implements TimePeriodService
                 retVal = usersDateTime.isAfter( LocalTime.parse(timeIntervalFrom, timeFormatter).minusMinutes(1)) && usersDateTime.isBefore( LocalTime.parse(timeIntervalTo, timeFormatter).plusMinutes(1));
             }
         } catch (Exception ex) {
-            log.error("Failed to found if the checkedTime={} is part of the from {} to {} interval", checkedTime, timeIntervalFrom, timeIntervalTo);
+            Log.error("Failed to found if the checkedTime={} is part of the from {} to {} interval", checkedTime, timeIntervalFrom, timeIntervalTo);
             throw new InvalidParameterException("usersTime", checkedTime);
         }
         return retVal;

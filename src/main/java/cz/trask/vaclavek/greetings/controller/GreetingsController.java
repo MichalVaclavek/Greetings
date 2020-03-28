@@ -44,7 +44,7 @@ import cz.trask.vaclavek.greetings.service.TimePeriodService;
 public class GreetingsController
 {
     
-    private static final Logger log = LoggerFactory.getLogger(GreetingsController.class);
+    private static final Logger Log = LoggerFactory.getLogger(GreetingsController.class);
     
     /**
      * Instance of {@link GreetingsService} implementation
@@ -89,18 +89,18 @@ public class GreetingsController
                                                            Locale locale) {
         
         if (locale.getLanguage().contains("xx") || lang.isEmpty()) {
-            log.error("Missing 'lang' parameter in REST request.");
+            Log.error("Missing 'lang' parameter in REST request.");
             throw new InvalidParameterException("lang", lang);
         }
         if (usersTime.isEmpty()) {
-            log.error("Missing 'usersTime' parameter in REST request.");
+            Log.error("Missing 'usersTime' parameter in REST request.");
             throw new InvalidParameterException("usersTime", usersTime);
         }
         
         String greeting = null;
         if (locale != null) {
             greeting = greetingsService.getTimeSensitiveGreeting(timePeriodService.getTimePeriod(usersTime), locale);
-            log.info("Time sensitive greeting retrieved: {}", greeting);
+            Log.info("Time sensitive greeting retrieved: {}", greeting);
         }
         
         return (greeting == null) ? new ResponseEntity<String>(HttpStatus.NOT_FOUND)
@@ -123,12 +123,12 @@ public class GreetingsController
                                                              Locale locale) {
 
         if (locale.getLanguage().contains("xx") || lang.isEmpty()) {
-            log.error("Missing 'lang' parameter in REST request.");
+            Log.error("Missing 'lang' parameter in REST request.");
             throw new InvalidParameterException("lang", lang);
         }
         
         String greeting = greetingsService.getTimeInsensitiveGreeting(locale);
-        log.info("Time insensitive greeting retrieved: {}", greeting);
+        Log.info("Time insensitive greeting retrieved: {}", greeting);
         
         return (greeting == null) ? new ResponseEntity<String>(HttpStatus.NOT_FOUND)
                                   : new ResponseEntity<String>(greeting, HttpStatus.OK);

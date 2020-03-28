@@ -14,7 +14,7 @@ import cz.trask.vaclavek.greetings.service.GreetingsService;
 import cz.trask.vaclavek.greetings.service.TimePeriodService.TimePeriod;
 
 /**
- * Implementation of the {@link GreetinsService}
+ * Implementation of the {@link GreetingsService}
  * 
  * @see GreetingsConfiguration
  * 
@@ -25,7 +25,9 @@ import cz.trask.vaclavek.greetings.service.TimePeriodService.TimePeriod;
 public class GreetingsServiceImpl implements GreetingsService
 {
 
-    private static final Logger log = LoggerFactory.getLogger(GreetingsServiceImpl.class);
+    // ****** CLASS CONSTANTS ******
+    
+    private static final Logger Log = LoggerFactory.getLogger(GreetingsServiceImpl.class);
     
     /**
      * Keys of the 'messages_language_COUNTRY.properties' file items holding corresponding greeting texts<br>
@@ -35,7 +37,7 @@ public class GreetingsServiceImpl implements GreetingsService
     public static final String GREETING_MORNING_KEY = "greeting.timesensitive.morning";
     public static final String GREETING_AFTERNOON_KEY = "greeting.timesensitive.afternoon";
     public static final String GREETING_EVENING_KEY = "greeting.timesensitive.evening";
-    public static final String GREETING_GENERAL_KEY = "greeting.timesensitive.general";
+    public static final String GREETING_GENERAL_TIMESENSITIVE_KEY = "greeting.timesensitive.general";
     
     public static final String GREETING_GENERAL_TIMEINSENSITIVE_KEY = "greeting.timesinensitive.general";
     
@@ -48,7 +50,15 @@ public class GreetingsServiceImpl implements GreetingsService
     /**
      * Key of the 'messages.properties' file item holding common error text in case that greeting text cannot be returned
     */
-    public static final String GREETING_ERROR_KEY = "greeting.error";
+    private static final String GREETING_ERROR_KEY = "greeting.error";
+    
+    /**
+     * Deafult greeting text to identify, if the correct greeting was (not) find in {@link #messages}
+     */
+    private static final String GREETING_NOT_FOUND = "Not_found";
+    
+
+    // ****** INSTANCE FIELDS ******
     
     /**
      * Source of the greeting texts
@@ -56,13 +66,15 @@ public class GreetingsServiceImpl implements GreetingsService
     private MessageSource messages;
     
     /**
-     * General error message text in case that greeting text cannot be returned
+     * General error message text in case that any suitable greeting text cannot be returned
      */
     private static String errorMessageGeneral;
     
     
+    // ****** INSTANCE CONSTRUCTORS ******
+    
     /**
-     * Standard constructor with MessageSource instance injected.
+     * Standard Constructor with MessageSource instance injected.
      * 
      * @param messages source of the greeting texts
      */
@@ -72,11 +84,12 @@ public class GreetingsServiceImpl implements GreetingsService
        errorMessageGeneral = messages.getMessage(GREETING_ERROR_KEY, null, null);
     }
 
+    // ****** INSTANCE PUBLIC METHODS ******
 
     /**
      * {@inheritDoc}
      * <p>
-     * If the greeting text is same as the message key, then text is not found for<br>
+     * If the greeting text is same as the default {@code GREETING_NOT_FOUND}, then text is not found for<br>
      * the locale's language in the messages_xx_XX.properties file.<br>
      * Throws {@link LanguageNotSupportedException} if the requested greeting text cannot be found for requested locale.
      */
@@ -85,42 +98,32 @@ public class GreetingsServiceImpl implements GreetingsService
         
         String greeting = errorMessageGeneral;
         
-        boolean languageAndTimeSupported = false;
-        
-        try {
-            switch (timePeriod) {
-                case MORNING:
-                    greeting = messages.getMessage(GREETING_MORNING_KEY, null, locale);
-                    languageAndTimeSupported = !GREETING_MORNING_KEY.equals(greeting);
-                    break;
-                case AFTERNOON:
-                    greeting = messages.getMessage(GREETING_AFTERNOON_KEY, null, locale);
-                    languageAndTimeSupported = !GREETING_AFTERNOON_KEY.equals(greeting);
-                    break;
-                case EVENING:
-                    greeting = messages.getMessage(GREETING_EVENING_KEY, null, locale);
-                    languageAndTimeSupported = !GREETING_EVENING_KEY.equals(greeting);
-                    break;
-                case GENERAL_PURPOSE:
-                    greeting = messages.getMessage(GREETING_GENERAL_KEY, null, locale);
-                    languageAndTimeSupported = !GREETING_GENERAL_KEY.equals(greeting);
-                    break;
-        
-                default:
-                    break;
-        }
-        } catch (NoSuchMessageException ex) {
-            log.error("Greeting text not found in the messages.properties file.", ex);
+        switch (timePeriod) {
+            case MORNING:
+                greeting = messages.getMessage(GREETING_MORNING_KEY, null, GREETING_NOT_FOUND, locale);
+                break;
+            case AFTERNOON:
+                greeting = messages.getMessage(GREETING_AFTERNOON_KEY, null, GREETING_NOT_FOUND, locale);
+                break;
+            case EVENING:
+                greeting = messages.getMessage(GREETING_EVENING_KEY, null, GREETING_NOT_FOUND, locale);
+                break;
+            case GENERAL_PURPOSE:
+                greeting = messages.getMessage(GREETING_GENERAL_TIMESENSITIVE_KEY, null, GREETING_NOT_FOUND, locale);
+                break;
+    
+            default:
+                break;
         }
         
-        if (!languageAndTimeSupported) {
-            log.warn("Specific greeting text not available (in time sensitive operation mode) for the time period: {}. Trying to find general greeting text.", timePeriod);
-            greeting = messages.getMessage(GREETING_GENERAL_KEY, null, locale);
+        if (GREETING_NOT_FOUND.equals(greeting)) {
+            Log.warn("Specific greeting text not available (in time sensitive operation mode) for the time period: {}. Trying to find general greeting text.", timePeriod);
+            greeting = messages.getMessage(GREETING_GENERAL_TIMESENSITIVE_KEY, null, GREETING_NOT_FOUND, locale);
             
-            if (GREETING_GENERAL_KEY.equals(greeting)) {
+            if (GREETING_NOT_FOUND.equals(greeting)) {
                 // Even GREETING_GENERAL text for this locale is not found i.e. corresponding properties file for this locale is not available, throw exception
                 String errorText = messages.getMessage(GREETING_ERROR_LANGUAGENOTSUPPORTED_KEY, new String[] {locale.getLanguage()}, null);
-                log.error(errorText); 
+                Log.error(errorText); 
                 throw new LanguageNotSupportedException(errorText);
             }
         }
@@ -131,34 +134,19 @@ public class GreetingsServiceImpl implements GreetingsService
     /**
      * {@inheritDoc}
      * <p>
-     * If the greeting text is same as the message key, then the text is not found for<br>
+     * If the greeting text is same as the default {@code GREETING_NOT_FOUND}, then the text is not found for<br>
      * the locale's language in the messages_xx_XX.properties file.<br>
      * Throws {@link LanguageNotSupportedException} if the requested greeting text cannot be found for requested locale.
      */
     @Override
     public String getTimeInsensitiveGreeting(Locale locale) {
-        String greeting = errorMessageGeneral;
-        boolean languageSupported = false;
         
-        try {
-            greeting = messages.getMessage(GREETING_GENERAL_TIMEINSENSITIVE_KEY, null, locale);
-            // if the greeting text is same as the message key, then text is not found for the locale's language
-            languageSupported = !GREETING_GENERAL_TIMEINSENSITIVE_KEY.equals(greeting);
-        } catch  (NoSuchMessageException ex) {
-            log.error("Greeting text not found in the messages.properties file.", ex);
-        }
+        String greeting = messages.getMessage(GREETING_GENERAL_TIMEINSENSITIVE_KEY, null, GREETING_NOT_FOUND, locale);
         
-        if (!languageSupported) {
-            
-            log.warn("Greeting text not available for time insensitive operation mode.");
-            greeting = messages.getMessage(GREETING_GENERAL_KEY, null, locale);
-            
-            if (GREETING_GENERAL_KEY.equals(greeting)) {
-                // Even GREETING_GENERAL text for this locale is not found i.e. corresponding properties file for this locale is not available, throw exception
-                String errorText = messages.getMessage(GREETING_ERROR_LANGUAGENOTSUPPORTED_KEY, new String[] { locale.getLanguage()}, null);
-                log.error(errorText);
-                throw new LanguageNotSupportedException(errorText);
-            }
+        if (GREETING_NOT_FOUND.equals(greeting)) {
+            String errorText = messages.getMessage(GREETING_ERROR_LANGUAGENOTSUPPORTED_KEY, new String[] { locale.getLanguage()}, null);
+            Log.error(errorText);
+            throw new LanguageNotSupportedException(errorText);
         }
         
         return greeting;
