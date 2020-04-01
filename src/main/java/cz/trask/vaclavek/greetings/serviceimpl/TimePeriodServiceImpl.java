@@ -29,7 +29,7 @@ public class TimePeriodServiceImpl implements TimePeriodService
 
     private static final Logger Log = LoggerFactory.getLogger(TimePeriodServiceImpl.class);
     
-    /**
+    /*
      * Time string constants defining start and end of the respective day period<br>
      * i.e. defines respective {@link TimePeriod} value.<br>
      */

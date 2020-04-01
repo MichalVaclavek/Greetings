@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ResponseStatus(value=HttpStatus.NOT_FOUND, reason="Language Not Supported Exception!")
 public class LanguageNotSupportedException extends RuntimeException
 {
-    /**
+    /*
      * Generated serial version ID
      */
     private static final long serialVersionUID = -2416334043811848871L;

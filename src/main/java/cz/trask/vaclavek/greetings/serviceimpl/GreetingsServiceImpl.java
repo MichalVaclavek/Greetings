@@ -5,7 +5,6 @@ import java.util.Locale;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.MessageSource;
-import org.springframework.context.NoSuchMessageException;
 import org.springframework.stereotype.Service;
 
 import cz.trask.vaclavek.greetings.errors.LanguageNotSupportedException;
@@ -29,7 +28,7 @@ public class GreetingsServiceImpl implements GreetingsService
     
     private static final Logger Log = LoggerFactory.getLogger(GreetingsServiceImpl.class);
     
-    /**
+    /*
      * Keys of the 'messages_language_COUNTRY.properties' file items holding corresponding greeting texts<br>
      * Every language/coutry combination has its own properties file with the greetings texts in that specific language/coutry.
      * The keys are used by {@code MessageSource} instance of this {@code GreetingsServiceImpl} class

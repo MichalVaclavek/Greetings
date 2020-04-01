@@ -16,7 +16,6 @@ import cz.trask.vaclavek.greetings.service.GreetingsService;
 import cz.trask.vaclavek.greetings.service.TimePeriodService;
 
 /**
- * 
  * Main REST controller to serve REST API calls.
  * <p>
  * It introduces two main API call paths for different modes of operation:

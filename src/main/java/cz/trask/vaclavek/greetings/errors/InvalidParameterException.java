@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ResponseStatus(HttpStatus.BAD_REQUEST)
 public class InvalidParameterException extends RuntimeException
 {
-    /**
+    /*
      * Generated serial version ID
      */
     private static final long serialVersionUID = -5767574973768520183L;
