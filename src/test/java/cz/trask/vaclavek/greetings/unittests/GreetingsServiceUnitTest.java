@@ -5,31 +5,29 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.Locale;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.MessageSource;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import cz.trask.vaclavek.greetings.errors.InvalidParameterException;
 import cz.trask.vaclavek.greetings.errors.LanguageNotSupportedException;
 import cz.trask.vaclavek.greetings.service.GreetingsService;
-import cz.trask.vaclavek.greetings.service.TimePeriodService;
 import cz.trask.vaclavek.greetings.service.TimePeriodService.TimePeriod;
 import cz.trask.vaclavek.greetings.serviceimpl.GreetingsServiceImpl;
 
 /**
  * Unit tests of the {@link GreetingsService}
  * 
+ * Not done properly as the SpringBoot test context needs to be loaded (using @SpringBootTest)
+ * to get MessageSource injected.
+ * 
  * @author Michal Vaclavek
  *
  */
 @SpringBootTest
-@ExtendWith(SpringExtension.class)
 public class GreetingsServiceUnitTest
 {
-    @Autowired
     private GreetingsService greetingsService;
     
     /**
@@ -37,6 +35,17 @@ public class GreetingsServiceUnitTest
      */
     @Autowired
     private MessageSource messages;
+    
+    
+    @BeforeEach
+    public void setUp() throws Exception {
+       // MockitoAnnotations.initMocks(this);
+        //StaticMessageSource messages = new StaticMessageSource();
+        //messages.setUseCodeAsDefaultMessage(true); 
+        greetingsService = new GreetingsServiceImpl(messages);
+
+    }
+    
     
     /**
      * Tests if the correct greeting text is returned according given {@code locale} and {@link TimePeriod}
