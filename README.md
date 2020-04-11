@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/MichalVaclavek/Greetings.svg?style=svg)](https://circleci.com/gh/MichalVaclavek/Greetings)
+
 ## Greetings service
 
 This is Greetings REST service application - service that provides appropriate greeting upon API request according preferred language
